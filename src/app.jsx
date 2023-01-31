@@ -17,7 +17,7 @@ export default function App() {
     const select = event.target[0].value;
     const topic = event.target[1].value;
     const gist = event.target[2].value;
-    const prompt = `試在五段內,透過${select},以${topic}為題,帶出${gist}。`
+    const prompt = `透過${select},以${topic}為題,帶出${gist}。`
     console.log(select, topic, gist);
     setLoading(true);
     try {
