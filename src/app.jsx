@@ -6,7 +6,6 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   // get environment variables
   const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
-  console.log(OPENAI_API_KEY);
 
   // API config
   const configuration = new Configuration({
@@ -18,14 +17,14 @@ export default function App() {
     const select = event.target[0].value;
     const topic = event.target[1].value;
     const gist = event.target[2].value;
-    const prompt = `透過${select},以${topic}為題,帶出${gist}。`
+    const prompt = `試在五段內,透過${select},以${topic}為題,帶出${gist}。`
     console.log(select, topic, gist);
     setLoading(true);
     try {
       const completion = await openai.createCompletion({
         model: "text-davinci-003",
         prompt: prompt,  // \n\n###\n\n is a stop sequence recognised by gpt-3
-        max_tokens: 548,
+        max_tokens: 1024,
       });
       // temperature: 0.7,
       // n: 1,
@@ -47,8 +46,6 @@ export default function App() {
         <form
           onSubmit={async (event) => {
             event.preventDefault();
-            console.log(event);
-            console.log(event.target[0].value);
             //call gpt 3
 
             const response = await generateResponse(event);
@@ -140,7 +137,7 @@ export default function App() {
           {result.map((result) => {
             return (
               <article key={result}>
-                <p>{result}</p>
+                <div style="white-space: pre-wrap">{result}</div>
               </article>
             );
           })}
