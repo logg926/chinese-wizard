@@ -3,7 +3,6 @@ import { Configuration, OpenAIApi } from "openai";
 
 export default function App() {
   const [result, setResult] = useState([]);
-  const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   // get environment variables
   const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
@@ -66,7 +65,7 @@ export default function App() {
           </p>
           <h6>學習重點:</h6>
           <div className="grid">
-            <select value={this.state.value} onChange={(e)=> {set}}>
+            <select>
               <option value="" disabled>
                 學習重點
               </option>
