@@ -46,7 +46,7 @@ export default function App() {
           // 'stop': ["\"\"\""],
         })
       };
-     const body = await fetch('https://api.openai.com/v1/engines/code-davinci-001/completions', requestOptions)
+     const body = await fetch('https://api.openai.com/v1/engines/code-davinci-003/completions', requestOptions)
           // .then(response => response.json())
          
      const completion = body.json()
@@ -63,7 +63,10 @@ export default function App() {
 
   return (
     <>
-      <header>
+      <main className="container-fluid">
+        <div className="row">
+          <div className="col">
+          </div>
         <form
           onSubmit={async (event) => {
             event.preventDefault();
@@ -155,8 +158,6 @@ export default function App() {
             </button>
           </div>
         </form>
-      </header>
-      <main className="container">
         <section id="Result">
           <h2>Result</h2>
           {result.map((result) => {
@@ -167,6 +168,8 @@ export default function App() {
             );
           })}
         </section>
+          
+        </div>
       </main>
     </>
   );
