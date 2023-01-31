@@ -38,7 +38,7 @@ export default function App() {
         },
         body: JSON.stringify({
           prompt: prompt,
-          max_tokens: 400,
+          max_tokens: 2000,
           // 'temperature': 0.1,
           // 'max_tokens': Math.floor(fileLength/2),
           // 'top_p': 1,
@@ -165,10 +165,17 @@ export default function App() {
             })}
           </section>
         </div>
+        <div className="grid">
+          <label for="date">
+            Date
+            <input type="date" id="date" name="date" />
+          </label>
+          <label for="date">
+            Date
+            <input type="date" id="date" name="date" />
+          </label>
+        </div>
       </main>
-      <div className="row">
-        <div className="col">1</div> <div className="col">1</div>
-      </div>
     </>
   );
 }
