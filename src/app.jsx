@@ -3,6 +3,7 @@ import { Configuration, OpenAIApi } from "openai";
 
 export default function App() {
   const [result, setResult] = useState([]);
+  const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   // get environment variables
   const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
@@ -65,7 +66,7 @@ export default function App() {
           </p>
           <h6>學習重點:</h6>
           <div className="grid">
-            <select>
+            <select value={this.state.value} onChange={(e)=> {set}}>
               <option value="" disabled>
                 學習重點
               </option>
@@ -125,6 +126,10 @@ export default function App() {
               name="email"
               required
             />
+            <h6>預覽</h6>
+            <div className="border rounded-[20px] p-5 min-h-[200px] w-[200px]">
+              {prompt}
+            </div>
             <button aria-busy={loading ? "true" : "false"} type="submit">
               生成
             </button>
@@ -137,7 +142,7 @@ export default function App() {
           {result.map((result) => {
             return (
               <article key={result}>
-                <div style="white-space: pre-wrap">{result}</div>
+                <div className="whitespace-pre">{result}</div>
               </article>
             );
           })}
