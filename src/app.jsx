@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 
 export default function App() {
-  const [result, setResult] = useState(["hi"]);
+  const [result, setResult] = useState([]);
   return (
     <>
       <header>
         <form
           onSubmit={(event) => {
+            setResult(pre=>{
+              
+            })
             console.log(JSON.stringify(event));
           }}
         >
           <h2>Chinese Writing Wizard</h2>
           <p>{"<Description>"}</p>
           <h6>ABCD:</h6>
-          <div class="grid">
+          <div className="grid">
             <select>
               <option value="" disabled>
                 Select
@@ -43,12 +46,12 @@ export default function App() {
           </div>
         </form>
       </header>
-      <main class="container">
+      <main className="container">
         <section id="Result">
           <h2>Result</h2>
           {result.map((result) => {
             return (
-              <article>
+              <article key={result}>
                 <p>{result}</p>
               </article>
             );
