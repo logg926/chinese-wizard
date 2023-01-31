@@ -2,17 +2,24 @@ import React, { useState } from "react";
 
 export default function App() {
   const [result, setResult] = useState([]);
+
+  // get environment variables
+  const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
+  console.log(OPENAI_API_KEY);
+
   return (
     <>
       <header>
         <form
-          
           onSubmit={(event) => {
             event.preventDefault();
+            console.log(
+              event
+            );
+            
             //call gpt 3
-            console.log(event.target);
             
-            
+
             setResult((pre) => {
               return [...pre, "hi"];
             });
@@ -23,9 +30,10 @@ export default function App() {
           <h6>學習重點:</h6>
           <div className="grid">
             <select>
-              <option value="" disabled>學習重點</option>
+              <option value="" disabled>
+                學習重點
+              </option>
               <option value="動態描寫">動態描寫</option>
-
             </select>
             <h6>題目:</h6>
             <input
