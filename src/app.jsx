@@ -14,10 +14,14 @@ export default function App() {
   });
   const openai = new OpenAIApi(configuration);
 
-  const generateResponse = async () => {
+  const generateResponse = async (event) => {
+    const select = event.target[0].value;
+    const topic = event.target[1].value;
+    const gist = event.target[2].value;
+    console.log(select, topic, gist)
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: "透過" +  + ", " + "以" + "" + "為題" + ", 帶出" + "" + "\n\n###\n\n", // \n\n###\n\n is a stop sequence recognised by gpt-3
+      prompt: "透過" + select + ", " + "以" + topic + "為題" + ", 帶出" + gist + "\n\n###\n\n", // \n\n###\n\n is a stop sequence recognised by gpt-3
       // max_tokens: 256,
       // temperature: 0.7,
       // n: 1,
@@ -26,10 +30,9 @@ export default function App() {
     const response = completion.data.choices[0].text;
 
     // Debugging
-    // console.log(`Called with\nPrompt: ${articleContext + "\n\n###\n\n"}`)
-    // console.log("=====")
-    // console.log(`Response:\n${response}`)
-    // console.log("=====")
+    console.log("=====")
+    console.log(`Response:\n${response}`)
+    console.log("=====")
     return response;
   };
 
@@ -37,11 +40,12 @@ export default function App() {
     <>
       <header>
         <form
-          onSubmit={(event) => {
+          onSubmit={async (event) => {
             event.preventDefault();
             console.log(event);
-
+            console.log(event.target[0].value);
             //call gpt 3
+            await generateResponse(event);
 
             setResult((pre) => {
               return [...pre, "hi"];
