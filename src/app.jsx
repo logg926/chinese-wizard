@@ -3,7 +3,7 @@ import { Configuration, OpenAIApi } from "openai";
 
 export default function App() {
   const [result, setResult] = useState([]);
-  const [loading, setLoading]= useState(false);
+  const [loading, setLoading] = useState(false);
   // get environment variables
   const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
   console.log(OPENAI_API_KEY);
@@ -18,21 +18,32 @@ export default function App() {
     const select = event.target[0].value;
     const topic = event.target[1].value;
     const gist = event.target[2].value;
-    console.log(select, topic, gist)
+    console.log(select, topic, gist);
+    setLoading(true)
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: "透過" + select + ", " + "以" + topic + "為題" + ", 帶出" + gist + "\n\n###\n\n", // \n\n###\n\n is a stop sequence recognised by gpt-3
-      // max_tokens: 256,
+      prompt:
+        "透過" +
+        select +
+        ", " +
+        "以" +
+        topic +
+        "為題" +
+        ", 帶出" +
+        gist+"。",
+      // \n\n###\n\n is a stop sequence recognised by gpt-3
+      max_tokens: 256,
       // temperature: 0.7,
       // n: 1,
       // stop: OPENAI_STOP_WORD,
     });
+    console.log(completion)
     const response = completion.data.choices[0].text;
 
     // Debugging
-    console.log("=====")
-    console.log(`Response:\n${response}`)
-    console.log("=====")
+    console.log("=====");
+    console.log(`Response:\n${response}`);
+    console.log("=====");
     return response;
   };
 
@@ -45,15 +56,19 @@ export default function App() {
             console.log(event);
             console.log(event.target[0].value);
             //call gpt 3
-            await generateResponse(event);
+            
+            const response = await generateResponse(event);
 
             setResult((pre) => {
-              return [...pre, "hi"];
+              return [...pre, response];
             });
           }}
         >
           <h2>Chinese Writing Wizard</h2>
-          <p>{"<Description>"}</p>
+          <p>
+            巫筆(Chinese Writing Wizard)
+            是一個透過AI技術自動產生中文寫作範文的教學輔助工具。教師只需輸入寫作題目、學習目標、學生年級，便能製作出最適合學生程度和課程要求的範文，令中文教學更便捷、更有效。此外，巫筆能就寫作題目產生審題提示、寫作建議，讓學生掌握「怎樣寫」和「寫什麼」，促進寫作能力，改善成績。
+          </p>
           <h6>學習重點:</h6>
           <div className="grid">
             <select>
@@ -118,7 +133,9 @@ export default function App() {
               aria-label="Email address"
               required
             />
-            <button aria-busy={loading?"true":"false"}  type="submit">生成</button>
+            <button aria-busy={loading ? "true" : "false"} type="submit">
+              生成
+            </button>
           </div>
         </form>
       </header>
