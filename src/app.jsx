@@ -120,14 +120,12 @@ export default function App() {
             <input
               type="text"
               name="firstname"
-              aria-label="First name"
               required
             />
             <h6>主旨:</h6>
             <input
               type="text"
               name="email"
-              aria-label="Email address"
               required
             />
             <button aria-busy={loading ? "true" : "false"} type="submit">
