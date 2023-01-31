@@ -7,8 +7,9 @@ export default function App() {
       <header>
         <form
           onSubmit={(event) => {
+            //call gpt 3
             setResult(pre=>{
-              
+              return [...pre, "hi"]
             })
             console.log(JSON.stringify(event));
           }}
