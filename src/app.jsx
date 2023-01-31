@@ -21,16 +21,37 @@ export default function App() {
     console.log(select, topic, gist);
     setLoading(true);
     try {
-      const completion = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: prompt,  // \n\n###\n\n is a stop sequence recognised by gpt-3
-        max_tokens: 1024,
-      });
+      // const completion = await openai.createCompletion({
+      //   model: "text-davinci-003",
+      //   prompt: prompt,  // \n\n###\n\n is a stop sequence recognised by gpt-3
+      //   max_tokens: 1024,
+      // });
       // temperature: 0.7,
       // n: 1,
       // stop: OPENAI_STOP_WORD,
-      console.log(completion);
-      const response = completion.data.choices[0].text;
+      
+            const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + String(OPENAI_API_KEY)
+        },
+        body: JSON.stringify({
+          'prompt': prompt,
+          // 'temperature': 0.1,
+          // 'max_tokens': Math.floor(fileLength/2),
+          // 'top_p': 1,
+          // 'frequency_penalty': 0,
+          // 'presence_penalty': 0.5,
+          // 'stop': ["\"\"\""],
+        })
+      };
+     const body = await fetch('https://api.openai.com/v1/engines/code-davinci-001/completions', requestOptions)
+          // .then(response => response.json())
+         
+     const completion = body.json()
+      console.log(completion.json());
+      const response = completion.json().data.choices[0].text;
       // Debugging
       console.log("=====");
       console.log(`Response:\n${response}`);
