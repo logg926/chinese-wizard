@@ -18,23 +18,14 @@ export default function App() {
     const select = event.target[0].value;
     const topic = event.target[1].value;
     const gist = event.target[2].value;
+    const prompt = `透過${select},以${topic}為題,帶出${gist}。`
     console.log(select, topic, gist);
     setLoading(true);
     try {
       const completion = await openai.createCompletion({
         model: "text-davinci-003",
-        prompt:
-          "透過" +
-          select +
-          ", " +
-          "以" +
-          topic +
-          "為題" +
-          ", 帶出" +
-          gist +
-          "。",
-        // \n\n###\n\n is a stop sequence recognised by gpt-3
-        max_tokens: 256,
+        prompt: prompt,  // \n\n###\n\n is a stop sequence recognised by gpt-3
+        max_tokens: 548,
       });
       // temperature: 0.7,
       // n: 1,
