@@ -7,7 +7,7 @@ export default function App() {
       <header>
         <form
           onSubmit={(event) => {
-            console.log(event);
+            console.log(JSON.stringify(event));
           }}
         >
           <h2>Chinese Writing Wizard</h2>
@@ -15,7 +15,7 @@ export default function App() {
           <h6>ABCD:</h6>
           <div class="grid">
             <select>
-              <option value="" disabled selected>
+              <option value="" disabled>
                 Select
               </option>
               <option>1</option>
@@ -33,7 +33,7 @@ export default function App() {
             />
             <h6>ABCD:</h6>
             <input
-              type="email"
+              type="text"
               name="email"
               placeholder="Email address"
               aria-label="Email address"
