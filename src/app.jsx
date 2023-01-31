@@ -19,32 +19,35 @@ export default function App() {
     const topic = event.target[1].value;
     const gist = event.target[2].value;
     console.log(select, topic, gist);
-    setLoading(true)
-    const completion = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt:
-        "透過" +
-        select +
-        ", " +
-        "以" +
-        topic +
-        "為題" +
-        ", 帶出" +
-        gist+"。",
-      // \n\n###\n\n is a stop sequence recognised by gpt-3
-      max_tokens: 256,
+    setLoading(true);
+    try {
+      const completion = await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt:
+          "透過" +
+          select +
+          ", " +
+          "以" +
+          topic +
+          "為題" +
+          ", 帶出" +
+          gist +
+          "。",
+        // \n\n###\n\n is a stop sequence recognised by gpt-3
+        max_tokens: 256,
+      });
       // temperature: 0.7,
       // n: 1,
       // stop: OPENAI_STOP_WORD,
-    });
-    console.log(completion)
-    const response = completion.data.choices[0].text;
-
-    // Debugging
-    console.log("=====");
-    console.log(`Response:\n${response}`);
-    console.log("=====");
-    return response;
+      console.log(completion);
+      const response = completion.data.choices[0].text;
+      // Debugging
+      console.log("=====");
+      console.log(`Response:\n${response}`);
+      console.log("=====");
+      return response;
+    } catch (e) {}
+    return null;
   };
 
   return (
@@ -56,12 +59,15 @@ export default function App() {
             console.log(event);
             console.log(event.target[0].value);
             //call gpt 3
-            
+
             const response = await generateResponse(event);
 
-            setResult((pre) => {
-              return [...pre, response];
-            });
+            setLoading(false);
+            if (response) {
+              setResult((pre) => {
+                return [...pre, response];
+              });
+            }
           }}
         >
           <h2>Chinese Writing Wizard</h2>
